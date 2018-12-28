@@ -1,10 +1,18 @@
 ---
 layout: default
 ---
+# Test-1
+
+[Test-1-detail](./docs/test1/test-1-1.html)
+
+# Blog
+
+[Blog Detail](./docs/blog/index.html)
 
 Text can be **bold**, _italic_, or ~~strikethrough~~.
 
 [Link to another page](./another-page.html).
+
 [Link to another page1](./another-page-1.html).
 
 There should be whitespace between paragraphs.
