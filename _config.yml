@@ -3,4 +3,4 @@ logo: /assets/img/logo.jpeg
 description: Welcome to My Blog.
 show_downloads: false
 google_analytics:
-theme: jekyll-theme-minimal
+theme: jekyll-theme-dinky
