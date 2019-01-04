@@ -258,7 +258,7 @@ static unsigned int mmc_hash_crc32(const char *key, int key_len)
 }
 
 
-static unsigned int mmc_hash_fnv1a(const char *key, int key_len) /* FNV-1a hash {{{ */
+static unsigned int mmc_hash_fnv1a(const char *key, int key_len) 
 {
 	unsigned int hval = FNV_32_INIT;
 	int i;
