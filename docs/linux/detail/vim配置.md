@@ -4,7 +4,6 @@
 
 ```bash
 """""""""""""""""""""""""""""""""
-" => General Options "{{{ 
 set guifont=DejaVu\ Sans\ YuanTi\ Mono\ 10
 
 " Session 
@@ -58,7 +57,6 @@ autocmd BufReadPost *
 
 
 "}}} 
-" => Colors and Fonts "{{{ 
 set t_Co=256
 " ¿¿vim¿¿¿¿¿
 "set background=dark
@@ -81,7 +79,6 @@ endif
 " ¿¿¿¿
 set foldmethod=marker
 "}}}
-" => other UI options"{{{
 " Tab¿¿
 set smarttab
 set tabstop=4 
@@ -143,7 +140,6 @@ map <C-l> <C-W>l
 " ¿¿¿¿¿¿
 set cmdheight=1
 "}}}
-" => Files "{{{
 " ¿¿¿¿ 
 set fileencodings=ucs-bom,utf-8,gb2312,gbk,gb18030,big-5,ucs,latin1
 
