@@ -26,7 +26,7 @@ consistent hashing的原理是，首先求出memcached服务器节点的哈希�
 相关实现如下部分代码所示：
 
 ```c
-static mmc_t *mmc_consistent_find(mmc_consistent_state_t *state, unsigned int point) /* {{{ */
+static mmc_t *mmc_consistent_find(mmc_consistent_state_t *state, unsigned int point)
 {
     int lo = 0, hi = state->num_points - 1, mid;
 
@@ -64,7 +64,7 @@ static mmc_t *mmc_consistent_find(mmc_consistent_state_t *state, unsigned int po
 ### CRC32
 
 ```c
-static unsigned int mmc_hash_crc32(const char *key, int key_len) /* CRC32 hash {{{ */
+static unsigned int mmc_hash_crc32(const char *key, int key_len) 
 {
     unsigned int crc = ~0;
     int i;
@@ -80,7 +80,7 @@ static unsigned int mmc_hash_crc32(const char *key, int key_len) /* CRC32 hash {
 ### FNV
 
 ```c
-static unsigned int mmc_hash_fnv1a(const char *key, int key_len) /* FNV-1a hash {{{ */
+static unsigned int mmc_hash_fnv1a(const char *key, int key_len) 
 {
     unsigned int hval = FNV_32_INIT;
     int i;
