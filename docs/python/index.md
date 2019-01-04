@@ -8,3 +8,4 @@ layout: default
   * **[Django与web服务器的部署与配置](./detail/Django与web服务器(Ningx和uWSGI)的部署与配置.html)**
  
 
+[back](./../../)
