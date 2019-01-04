@@ -5,9 +5,9 @@ layout: default
 
 [Test-1-detail](./docs/test1/test-1-1.html)
 
-# Blog
+# 设计与建模
 
-[Blog Detail](./docs/blog/index.html)
+[详情](./docs/design/index.html)
 
 Text can be **bold**, _italic_, or ~~strikethrough~~.
 
