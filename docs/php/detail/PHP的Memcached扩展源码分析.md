@@ -163,7 +163,7 @@ typedef struct mmc_hash {
 
 ```c
 #memcache.c
-mmc_pool_t *mmc_pool_new(TSRMLS_D) /* {{{ */
+mmc_pool_t *mmc_pool_new(TSRMLS_D) 
 {
 	mmc_pool_t *pool = emalloc(sizeof(mmc_pool_t));
 	pool->num_servers = 0;
@@ -181,7 +181,7 @@ mmc_pool_t *mmc_pool_new(TSRMLS_D) /* {{{ */
 
 ```c
 #memcache.c
-static void mmc_pool_init_hash(mmc_pool_t *pool TSRMLS_DC) /* {{{ */
+static void mmc_pool_init_hash(mmc_pool_t *pool TSRMLS_DC) 
 {
 	mmc_hash_function hash;
 
@@ -227,7 +227,7 @@ typedef struct mmc_standard_state {
 	mmc_hash_function		hash;
 } mmc_standard_state_t;
 
-void *mmc_standard_create_state(mmc_hash_function hash) /* {{{ */
+void *mmc_standard_create_state(mmc_hash_function hash) 
 {
     //初始化状态
 	mmc_standard_state_t *state = emalloc(sizeof(mmc_standard_state_t));
@@ -236,7 +236,7 @@ void *mmc_standard_create_state(mmc_hash_function hash) /* {{{ */
 	state->hash = hash;
 	return state;
 }
-/* }}} */
+
 
 
 ```
@@ -245,7 +245,7 @@ void *mmc_standard_create_state(mmc_hash_function hash) /* {{{ */
 
 ```c
 #memcache.c
-static unsigned int mmc_hash_crc32(const char *key, int key_len) /* CRC32 hash {{{ */
+static unsigned int mmc_hash_crc32(const char *key, int key_len) 
 {
 	unsigned int crc = ~0;
 	int i;
@@ -256,7 +256,7 @@ static unsigned int mmc_hash_crc32(const char *key, int key_len) /* CRC32 hash {
 
   	return ~crc;
 }
-/* }}} */
+
 
 static unsigned int mmc_hash_fnv1a(const char *key, int key_len) /* FNV-1a hash {{{ */
 {
@@ -290,14 +290,14 @@ typedef struct mmc_consistent_state {
 	mmc_hash_function		hash;//哈希函数
 } mmc_consistent_state_t;
 
-void *mmc_consistent_create_state(mmc_hash_function hash) /* {{{ */
+void *mmc_consistent_create_state(mmc_hash_function hash) 
 {
 	mmc_consistent_state_t *state = emalloc(sizeof(mmc_consistent_state_t));
 	memset(state, 0, sizeof(mmc_consistent_state_t));
 	state->hash = hash;
 	return state;
 }
-/* }}} */
+
 
 mmc_hash_t mmc_consistent_hash = {
 	mmc_consistent_create_state,
@@ -310,7 +310,7 @@ mmc_hash_t mmc_consistent_hash = {
 
 ```c
 #memcache.c
-void mmc_pool_add(mmc_pool_t *pool, mmc_t *mmc, unsigned int weight) /* {{{ */
+void mmc_pool_add(mmc_pool_t *pool, mmc_t *mmc, unsigned int weight) 
 {
 	/* add server and a preallocated request pointer */
 	if (pool->num_servers) {
@@ -336,7 +336,7 @@ _持久hash策略_
 
 ```c
 #memcache_consistent_hash.c
-void mmc_consistent_add_server(void *s, mmc_t *mmc, unsigned int weight) /* {{{ */
+void mmc_consistent_add_server(void *s, mmc_t *mmc, unsigned int weight) 
 {
 	mmc_consistent_state_t *state = s;
 	int i, key_len, points = weight * MMC_CONSISTENT_POINTS;
@@ -365,7 +365,7 @@ void mmc_consistent_add_server(void *s, mmc_t *mmc, unsigned int weight) /* {{{ 
 _标准hash策略_
 
 ```c
-void mmc_standard_add_server(void *s, mmc_t *mmc, unsigned int weight) /* {{{ */
+void mmc_standard_add_server(void *s, mmc_t *mmc, unsigned int weight) 
 {
 	mmc_standard_state_t *state = s;
 	int i;
@@ -403,7 +403,7 @@ PHP_FUNCTION(memcache_set)
 
 ```c
 #memcache.c
-static void php_mmc_store(INTERNAL_FUNCTION_PARAMETERS, char *command, int command_len) /* {{{ */
+static void php_mmc_store(INTERNAL_FUNCTION_PARAMETERS, char *command, int command_len) 
 {
 	mmc_pool_t *pool;
 	zval *value, *mmc_object = getThis();
@@ -486,7 +486,7 @@ static void php_mmc_store(INTERNAL_FUNCTION_PARAMETERS, char *command, int comma
 
 ```c
 #memcache.c
-int mmc_pool_store(mmc_pool_t *pool, const char *command, int command_len, const char *key, int key_len, int flags, int expire, const char *value, int value_len TSRMLS_DC) /* {{{ */
+int mmc_pool_store(mmc_pool_t *pool, const char *command, int command_len, const char *key, int key_len, int flags, int expire, const char *value, int value_len TSRMLS_DC) 
 {
 
 	.........
@@ -526,7 +526,7 @@ _mmc_standard_find_server_
 
 ```c
 #memcache_standard_hash.c
-mmc_t *mmc_standard_find_server(void *s, const char *key, int key_len TSRMLS_DC) /* {{{ */
+mmc_t *mmc_standard_find_server(void *s, const char *key, int key_len TSRMLS_DC) 
 {
 	mmc_standard_state_t *state = s;
 	mmc_t *mmc;
@@ -560,7 +560,7 @@ _mmc_consistent_find_server_
 
 ```c
 #memcache_consistent_hash.c
-mmc_t *mmc_consistent_find_server(void *s, const char *key, int key_len TSRMLS_DC) /* {{{ */
+mmc_t *mmc_consistent_find_server(void *s, const char *key, int key_len TSRMLS_DC) 
 {
 	mmc_consistent_state_t *state = s;
 	mmc_t *mmc;
@@ -635,7 +635,7 @@ PHP_FUNCTION(memcache_get)
 
 ```c
 #memcache.c
-int mmc_prepare_key(zval *key, char *result, unsigned int *result_len TSRMLS_DC)  /* {{{ */
+int mmc_prepare_key(zval *key, char *result, unsigned int *result_len TSRMLS_DC)  
 {
 	if (Z_TYPE_P(key) == IS_STRING) {
 		return mmc_prepare_key_ex(Z_STRVAL_P(key), Z_STRLEN_P(key), result, result_len TSRMLS_CC);
@@ -662,7 +662,7 @@ int mmc_prepare_key(zval *key, char *result, unsigned int *result_len TSRMLS_DC)
 
 ```c
 #memcache.c
-int mmc_exec_retrieval_cmd(mmc_pool_t *pool, const char *key, int key_len, zval **return_value, zval *return_flags TSRMLS_DC) /* {{{ */
+int mmc_exec_retrieval_cmd(mmc_pool_t *pool, const char *key, int key_len, zval **return_value, zval *return_flags TSRMLS_DC) 
 {
 	mmc_t *mmc;
 	char *command, *value;
@@ -759,7 +759,7 @@ PHP_FUNCTION(memcache_delete)
 
 ```
 #memcache.c
-int mmc_delete(mmc_t *mmc, const char *key, int key_len, int time TSRMLS_DC) /* {{{ */
+int mmc_delete(mmc_t *mmc, const char *key, int key_len, int time TSRMLS_DC) 
 {
 	char *command;
 	int command_len, response_len;
