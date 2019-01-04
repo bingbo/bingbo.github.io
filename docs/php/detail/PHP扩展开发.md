@@ -74,8 +74,7 @@ static zend_function_entry user_method[] = {
 > 注册相应的类及方法属性
 
 ```c
-/* {{{ PHP_MINIT_FUNCTION
- */
+
 PHP_MINIT_FUNCTION(test)
 {
 	/* If you have INI entries, uncomment these lines
@@ -91,7 +90,7 @@ PHP_MINIT_FUNCTION(test)
     zend_declare_class_constant_string(user_ce, "AUTHOR", strlen("AUTHOR"), "bill");
 	return SUCCESS;
 }
-/* }}} */
+
 ```
 
 ### 编写扩展接口
@@ -110,8 +109,7 @@ static zend_function_entry people_method[] = {
 > 注册接口People及其方法
 
 ```c
-/* {{{ PHP_MINIT_FUNCTION
- */
+
 PHP_MINIT_FUNCTION(test)
 {
 	/* If you have INI entries, uncomment these lines
@@ -124,7 +122,7 @@ PHP_MINIT_FUNCTION(test)
 
 	return SUCCESS;
 }
-/* }}} */
+
 ```
 
 ### 编写扩展抽象类
@@ -163,8 +161,7 @@ static zend_function_entry person_method[] = {
 > 注册抽象类Person及方法
 
 ```c
-/* {{{ PHP_MINIT_FUNCTION
- */
+
 PHP_MINIT_FUNCTION(test)
 {
 	/* If you have INI entries, uncomment these lines
@@ -180,7 +177,7 @@ PHP_MINIT_FUNCTION(test)
     zend_declare_property_string(person_ce, "staticvar", strlen("staticvar"), "test static var", ZEND_ACC_PUBLIC|ZEND_ACC_STATIC TSRMLS_CC);
 	return SUCCESS;
 }
-/* }}} */
+
 ```
 
 ### 编译安装扩展
