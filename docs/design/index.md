@@ -8,6 +8,5 @@ layout: default-blog
 * **[设计模式](detail/design_pattern.html)**
 * **[面向对象设计](detail/面向对象设计.html)**
 
-_yay_
 
 [back](./../../)

@@ -1,3 +1,6 @@
+---
+layout: default-blog
+---
 
 ## RUP(统一过程)
 
@@ -92,3 +95,5 @@
 **State Diagram**
 
 ![](https://github.com/bingbo/blog/blob/master/images/uml/state.jpg)
+
+
