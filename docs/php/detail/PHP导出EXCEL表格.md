@@ -28,19 +28,19 @@ xmlns="http://www.w3.org/TR/REC-html40">
 </head> 
 <body> 
 <div id="Classeur1_16681" align=center x:publishsource="Excel"> 
-<table x:str border=1 cellpadding=0 cellspacing=0 width=100% style="border-collapse: collapse"> 
+<table x:str border=1 cellpadding=0 cellspacing=0 width=100 style="border-collapse: collapse"> 
 <tr>
-\{%foreach $data.attributes as $key => $value%\}
-<td>\{%$value.name%\}</td>
-\{%/foreach%\}
+\{foreach $data.attributes as $key => $value\}
+<td>\{$value.name\}</td>
+\{/foreach\}
 </tr>
-\{%foreach $data.taskData.info as $index => $item%\}
+\{foreach $data.taskData.info as $index => $item\}
 <tr>
-\{%foreach $data.attributes as $akey => $attr%\}
-<td class=xl2216681 nowrap>\{%$item.info[\{%$attr.ename%\}]%\}</td>
-\{%/foreach%\}
+\{foreach $data.attributes as $akey => $attr\}
+<td class=xl2216681 nowrap>\{$item.info[\{$attr.ename\}]\}</td>
+\{/foreach\}
 </tr>
-\{%/foreach%\}
+\{/foreach\}
 </table> 
 </div> 
 </body> 
