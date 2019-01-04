@@ -1,5 +1,5 @@
 ---
-layout: default-blog
+layout: default
 ---
 
 ## RUP(统一过程)

@@ -1,5 +1,5 @@
 ---
-layout: default-blog
+layout: default
 ---
 
 ## 设计模式种类

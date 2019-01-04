@@ -1,0 +1,26 @@
+## 配置参数
+
+|参数名|说明|
+|---:|:---|
+|clientPort|必须配置，用于配置当前服务器对外服务端口，客户端会通过该端口和服务器创建连接，一般设置为2181.每台服务器都可以配置任意可用的端口，同时集群中的所有服务器不需要保持clientPort端口一致|
+|dataDir|无默认值，必须配置，用于配置服务器存储快照文件的目录。默认情况下，如果没有配置参数dataLogDir，那么事务日志也会存储在这个目录中。考虑到事务日志的写性能直接影响zookeeper整体的服务能力，因此建议同时通过参数dataLogDir来配置zookeeper事务日志的存储目录。|
+|tickTime|默认值为3000毫秒，用于配置zookeeper中最小时间单元的长度，很多运行时的时间间隔都是使用tickTime的倍数来表示的，例如，zookeeper中会话的最小超时时间默认是2*tickTime|
+|dataLogDir|该参数有默认值：dataDir，可以不配置。用于 配置服务器存储事务日志文件的目录。默认情况下，zookeeper会将事务日志文件和快照数据存储在同一个目录中，读者应尽量将这两者的目录区分开来。另外，如果条件允许，可以将事务日志的存储配置在一个单独的磁盘上。事务日志记录对于磁盘的性能要求非常高，为了保证数据的一致性，zookeeper在返回客户端事务请求响应之前，必须将本次请求对应的事务日志写入到磁盘中。因此，事务日志写入的性能直接决定了zookeeper在处理事务请求时的吞吐。针对同一块磁盘的其他并发读写操作，尤其是上文中提到的数据快照操作，会极大地影响事务日志的写性能。因此尽量给事务日志的输出配置一个单独的磁盘或是挂载点，将极大地提升zookeeper的整体性能。|
+|initLimit|用于配置leader服务器等待follower启动，并完成数据同步的时间，默认10，即表示参数tickTime的10倍|
+|syncLimit|用于配置leader服务器和follower之间进行心跳检测的最大延时时间，默认5，即tickTime的5倍|
+|snapCount|用于配置相邻两次数据快照之间的事务操作次数，即zookeeper会在snapCount次事务之后进行一次数据快照，默认100000|
+|preAllocSize|默认值65536KB，用天配置zookeeper事务日志文件预分配的磁盘空间大小。|
+|minSessionTimeout,maxSessionTimeout|这两个参数默认值分别是参数tickTime值的2倍和20倍，单位毫秒，用于服务端对客户端会话的超时时间进行限制|
+|maxClientCnxns|默认60，从socket层面限制单个客户端与单台服务器之间的并发连接数，即以IP地址粒度来进行连接数的限制|
+|jute.maxbuffer|默认1048575字节，用于配置单个数据节点上可以存储的最大数据量大小|
+|clientPortAddress|该参数允许为每个IP地址指定不同的监听端口|
+|server.id=host:port:port|用于配置组成zookeeper集群的机器列表，其中id即为ServerId,与每台服务器myid文件中数字相对应。同时，在该参数中，会配置两个端口：第一个端口用于指定follwer服务器与leader进行运行时通信和数据同步时所使用的端口，第二个端口则专门用于进行leader选举过程中的投票通信|
+|autopurge.snapRetainCount|用于配置zookeeper在自动清理的时候需要保留的快照数据文件数量和对应的事务日志文件，最小值是3|
+|autopurge.purgeInterval|默认值0小时，用于配置zookeeper进行历史文件自动清理的频率，如果为0或负数，就表明不需要开启定时清理功能|
+|fsync.warningthresholdms|默认100ms，用于配置zookeeper进行事务日志fsync操作时消耗时间的报警阈值|
+|forceSync|默认yes，用于配置zookeeper服务器是否在事务提交的时候，将日志写入操作强制刷入磁盘|
+|globalOutstandingLimit|默认1000，用于配置服务器最大请求堆积数量|
+|leaderServes|默认yes,用于配置leader服务器是否能够接受客户端的连接，即是否允许leader向客户端提供服务|
+|skipAcl|默认值no，用于配置zookeeper服务器是否路过acl权限检查|
+|cnxTimeout|默认5000ms,用于配置在leader选举过程中，各服务器之间野德tcp连接创建的超时时间|
+|electionAlg|用该参数来配置选择zookeeper进行leader选举时所使用的算法|

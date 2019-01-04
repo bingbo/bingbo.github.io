@@ -1,0 +1,307 @@
+## maven-assembly-plugin插件的应用
+
+Maven的Assembly Plugin主要是为了允许用户将项目输出及其依赖项，模块，站点文档和其他文件聚合到一个可分发的归档文件中。
+
+您的项目可以使用方便的预制装配描述符轻松地构建分布“组件” 。这些描述符处理许多常见操作，例如将项目的工件与生成的文档一起打包到一个zip压缩文件中。或者，您的项目可以提供自己的描述符，并假定对程序集中的依赖关系，模块，文件集和单个文件的打包方式进行更高级别的控制。
+
+详细使用可参考[spring-boot-dem](https://github.com/bingbo/spring-boot-demo)
+
+官方文档[Apache Maven Assembly插件](http://maven.apache.org/plugins/maven-assembly-plugin/index.html)
+
+### 添加插件依赖
+
+> 在pom.xml文件中添加maven-assembly-plugin构建插件
+
+```xml
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-assembly-plugin</artifactId>
+    <version>3.1.0</version>
+    <configuration>
+        <descriptors>
+            <descriptor>src/main/assembly/assemblyA.xml</descriptor>
+            <descriptor>src/main/assembly/assemblyB.xml</descriptor>
+        </descriptors>
+        <tarLongFileMode>posix</tarLongFileMode>
+    </configuration>
+</plugin>
+```
+
+### 创建构建打包配置
+
+> 新建配置文件assembly.xml进行构建打包的配置，配置示例及说明如下所示
+
+```xml
+<assembly xmlns="http://maven.apache.org/ASSEMBLY/2.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/ASSEMBLY/2.0.0 http://maven.apache.org/xsd/assembly-2.0.0.xsd">
+    <!--一个装配集合ID-->
+    <id>assembly_1</id>
+    <!--装配打包格式-->
+    <formats>
+        <format>tar.gz</format>
+        <format>dir</format>
+    </formats>
+    <!--是否包含根目录，默认为true -->
+    <includeBaseDirectory>true</includeBaseDirectory>
+    <!--设置生成的程序集归档的基本目录，默认拿${project.build.finalName}代替-->
+    <baseDirectory>${project.build.finalName}</baseDirectory>
+    <!--在最终档案中包含一个网站目录。项目的站点目录位置由Assembly Plugin的siteDirectory参数确定。 默认值是：false-->
+    <includeSiteDirectory/>
+    <!--容器描述符处理程序可用于动态过滤描述符中配置的文件的内容，例如通过将多个文件聚合成单个文件或自定义特定文件的内容-->
+    <containerDescriptorHandlers>
+        <containerDescriptorHandler>
+            <handlerName>after-merge-file</handlerName>
+            <configuration>
+                <!--匹配到的文件配置-->
+                <filePattern>.*/file.txt</filePattern>
+                <!--输出的文件名-->
+                <outputPath>file.txt</outputPath>
+            </configuration>
+        </containerDescriptorHandler>
+    </containerDescriptorHandlers>
+    <!--指定在程序集中包含哪些模块文件。moduleSet是通过提供一个或多个<moduleSet>子元素来指定的-->
+    <moduleSets>
+        <moduleSet>
+            <useAllReactorProjects/>
+            <includeSubModules/>
+            <includes/>
+            <excludes/>
+            <sources>
+                <useDefaultExcludes/>
+                <outputDirectory/>
+                <includes/>
+                <excludes/>
+                <fileMode/>
+                <directoryMode/>
+                <fileSets>
+                    <fileSet>
+                        <useDefaultExcludes/>
+                        <outputDirectory/>
+                        <includes/>
+                        <excludes/>
+                        <fileMode/>
+                        <directoryMode/>
+                        <directory/>
+                        <lineEnding/>
+                        <filtered/>
+                    </fileSet>
+                </fileSets>
+                <includeModuleDirectory/>
+                <excludeSubModuleDirectories/>
+                <outputDirectoryMapping/>
+            </sources>
+            <binaries>
+                <outputDirectory/>
+                <includes/>
+                <excludes/>
+                <fileMode/>
+                <directoryMode/>
+                <attachmentClassifier/>
+                <includeDependencies/>
+                <dependencySets>
+                    <dependencySet>
+                        <outputDirectory/>
+                        <includes/>
+                        <excludes/>
+                        <fileMode/>
+                        <directoryMode/>
+                        <useStrictFiltering/>
+                        <outputFileNameMapping/>
+                        <unpack/>
+                        <unpackOptions>
+                            <includes/>
+                            <excludes/>
+                            <filtered/>
+                            <lineEnding/>
+                            <useDefaultExcludes/>
+                            <encoding/>
+                        </unpackOptions>
+                        <scope/>
+                        <useProjectArtifact/>
+                        <useProjectAttachments/>
+                        <useTransitiveDependencies/>
+                        <useTransitiveFiltering/>
+                    </dependencySet>
+                </dependencySets>
+                <unpack/>
+                <unpackOptions>
+                    <includes/>
+                    <excludes/>
+                    <filtered/>
+                    <lineEnding/>
+                    <useDefaultExcludes/>
+                    <encoding/>
+                </unpackOptions>
+                <outputFileNameMapping/>
+            </binaries>
+        </moduleSet>
+        <moduleSet>
+            <!-- 允许访问当前多模块构建中的所有项目！ -->
+            <useAllReactorProjects>true</useAllReactorProjects>
+            <!--选择要包含在这个模块集中的项目-->
+            <includes>
+                <include>com.ibingbo:spring-boot-demo</include>
+            </includes>
+            <!--包含用于将项目模块的二进制文件包含在程序集中的配置选项-->
+            <binaries>
+                <!--设置输出目录相对于程序集根目录的根目录-->
+                <outputDirectory>modules/maven-assembly-plugin</outputDirectory>
+                <!--如果设置为true，则此属性将所有模块包解包到指定的输出目录中。当设置为false时，模块包将作为归档（jar）包含在内。 默认值是：true-->
+                <unpack>false</unpack>
+            </binaries>
+        </moduleSet>
+        <moduleSet>
+            <useAllReactorProjects>true</useAllReactorProjects>
+            <!--指定所要包含的模块-->
+            <includes>
+                <include>com.ibingbo:module1</include>
+            </includes>
+            <!--包含用于在程序集中包含项目模块的源文件的配置选项-->
+            <sources>
+                <!--指定模块的finalName是否应该添加到应用于它的任何fileSets的outputDirectory值-->
+                <includeModuleDirectory>false</includeModuleDirectory>
+                <!--指定包含在程序集中的每个包含模块的哪些文件组-->
+                <fileSets>
+                    <fileSet>
+                        <outputDirectory>sources/${module.artifactId}</outputDirectory>
+                        <excludes>
+                            <exclude>/Users/kama/apache-maven/maven-plugins/maven-assembly-plugin/target/checkout/target/**</exclude>
+                        </excludes>
+                    </fileSet>
+                </fileSets>
+            </sources>
+        </moduleSet>
+    </moduleSets>
+    <!--指定包含哪些文件组-->
+    <fileSets>
+        <fileSet>
+            <useDefaultExcludes/>
+            <outputDirectory/>
+            <includes/>
+            <excludes/>
+            <fileMode/>
+            <directoryMode/>
+            <directory/>
+            <lineEnding/>
+            <filtered/>
+        </fileSet>
+        <fileSet>
+            <!--设置模块目录的绝对或相对位置-->
+            <directory>src/main/assembly/bin</directory>
+            <!--设置输出目录相对于程序集根目录的根目录-->
+            <outputDirectory>bin</outputDirectory>
+            <!--与UNIX权限类似，设置所包含文件的文件模式-->
+            <fileMode>0755</fileMode>
+        </fileSet>
+        <fileSet>
+            <directory>src/main/resources</directory>
+            <outputDirectory>conf</outputDirectory>
+            <fileMode>0644</fileMode>
+        </fileSet>
+        <fileSet>
+            <directory>target/extra-conf</directory>
+            <outputDirectory>conf/META-INF/spring</outputDirectory>
+            <!--定义一组要包含的文件和目录-->
+            <includes>
+                <include>ctx-*.xml</include>
+            </includes>
+            <fileMode>0644</fileMode>
+        </fileSet>
+    </fileSets>
+    <!--指定在程序集中包含哪些单个文件-->
+    <files>
+        <file>
+            <source/>
+            <outputDirectory/>
+            <destName/>
+            <fileMode/>
+            <lineEnding/>
+            <filtered/>
+        </file>
+        <!--指定过滤相应的文件-->
+        <file>
+            <source>README.md</source>
+            <outputDirectory>/</outputDirectory>
+            <!--是否被过滤掉-->
+            <filtered>true</filtered>
+        </file>
+        <file>
+            <!--原文件-->
+            <source>Dockerfile</source>
+            <!--输出文件名-->
+            <destName>Dockerfile</destName>
+            <!--输出目录-->
+            <outputDirectory>/</outputDirectory>
+            <!--设置输出后的文件权限-->
+            <fileMode>0644</fileMode>
+        </file>
+    </files>
+    <dependencySets>
+        <dependencySet>
+            <outputDirectory/>
+            <includes/>
+            <excludes/>
+            <fileMode/>
+            <directoryMode/>
+            <useStrictFiltering/>
+            <outputFileNameMapping/>
+            <unpack/>
+            <unpackOptions>
+                <includes/>
+                <excludes/>
+                <filtered/>
+                <lineEnding/>
+                <useDefaultExcludes/>
+                <encoding/>
+            </unpackOptions>
+            <scope/>
+            <useProjectArtifact/>
+            <useProjectAttachments/>
+            <useTransitiveDependencies/>
+            <useTransitiveFiltering/>
+        </dependencySet>
+        <!--依赖关系集允许在程序集中包含和排除项目依赖关系-->
+        <dependencySet>
+            <!--设置输出目录相对于程序集根目录的根目录-->
+            <outputDirectory>lib</outputDirectory>
+            <!--定义一组依赖项工件坐标以排除,工件坐标可以以简单的groupId：artifactId形式给出，或者可以以groupId：artifactId：type [：classifier]：version的形式完全限定。另外，可以使用通配符，如*：maven- *-->
+            <excludes>
+                <!--排队demo-conf模块的jar包依赖，即过滤掉demo-conf的jar-->
+                <exclude>com.ibingbo.boot:demo-conf</exclude>
+            </excludes>
+        </dependencySet>
+    </dependencySets>
+    <!--定义要包含在程序集中的Maven仓库,包含元信息sha1和md5校验和，会在包中生成一个maven2目录-->
+    <repositories>
+        <repository>
+            <outputDirectory/>
+            <includes/>
+            <excludes/>
+            <fileMode/>
+            <directoryMode/>
+            <includeMetadata/>
+            <groupVersionAlignments>
+                <groupVersionAlignment>
+                    <id/>
+                    <version/>
+                    <excludes/>
+                </groupVersionAlignment>
+            </groupVersionAlignments>
+            <scope/>
+        </repository>
+        <repository>
+            <!--如果设置为true，则此属性将触发创建存储库元数据-->
+            <includeMetadata>true</includeMetadata>
+            <!--设置输出目录相对于程序集根目录的根目录-->
+            <outputDirectory>maven2</outputDirectory>
+        </repository>
+    </repositories>
+    <!--指定要包含在程序集中的共享组件xml文件位置,当找到多个componentDescriptors时，它们的内容被合并-->
+    <componentDescriptors>
+        <componentDescriptor>src/main/assembly/assembly_component.xml</componentDescriptor>
+    </componentDescriptors>
+</assembly>
+```
+
+
+
