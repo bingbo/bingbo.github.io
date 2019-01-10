@@ -10,24 +10,23 @@ redis-benchmark [-h <host>] [-p <port>] [-c <clients>] [-n <requests]> [-k <bool
 
 |选项|描述|默认值|
 |:---|:---|:---|
-|-h <hostname> |     Server hostname (default 127.0.0.1)	|
-|-p <port>     |     Server port (default 6379)	|
-|-s <socket>   |     Server socket (overrides host and port)|
-|-a <password> |     Password for Redis Auth|
-|-c <clients>  |     Number of parallel connections (default 50)|
-|-n <requests> |     Total number of requests (default 100000)|
-|-d <size>     |     Data size of SET/GET value in bytes (default 2)|
+|-h <hostname> |     指定服务器主机名|127.0.0.1	|
+|-p <port>     |     指定服务器端口|6379	|
+|-s <socket>   |     服务器socket，覆盖host和port|-|
+|-a <password> |     redis验证密码|-|
+|-c <clients>  |     指定并发连接数|50|
+|-n <requests> |     指定请求数|100000|
+|-d <size>     |     以字节的形式指定 SET/GET 值的数据大小|2|
 |--dbnum <db>  |      SELECT the specified db number (default 0)|
-|-k <boolean>  |     1=keep alive 0=reconnect (default 1)|
-|-r <keyspacelen>|   Use random keys for SET/GET/INCR, random values for SADDUsing this option the benchmark willexpand the string __rand_int__inside an argument with a 12 digits number in the specified rangefrom 0 to keyspacelen-1. The substitution changes every time a commandis executed. Default tests use this to hit random keys ithe
-specified range.|
-|-P <numreq>   |     Pipeline <numreq> requests. Default 1 (no pipeline).|
-|-e                 If server replies with errors, show them on stdout.               (no more than 1 error per second|
-|-q            |     Quiet. Just show query/sec values|
-|--csv         |     Output in CSV format|
-|-l            |     Loop. Run the tests forever|
-|-t <tests>    |     Only run the comma separated list of tests. The testnames are the same as the ones produced as |
-|-I            |     Idle mode. Just open N idle connections and wait.|
+|-k <boolean>  |     是否保持连接，1=keep alive 0=reconnect| 1|
+|-r <keyspacelen>|   SET/GET/INCR 使用随机 key, SADD 使用随机值|-|
+|-P <numreq>   |     通过管道传输 <numreq> 请求|1|
+|-e            |     如果服务器返回错误，则在控制台输出显示|-|
+|-q            |     强制退出 redis。仅显示 query/sec 值|-|
+|--csv         |     按CSV格式输出|-|
+|-l            |     循环，永久执行测试|-|
+|-t <tests>    |     仅运行以逗号分隔的测试命令列表|-|
+|-I            |     Idle 模式。仅打开 N 个 idle 连接并等待|-|
 
 ### 示例
 
