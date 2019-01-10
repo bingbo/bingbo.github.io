@@ -1,3 +1,5 @@
+## Redis-cli在排查问题时的使用
+
 通过redis-cli命令来管理服务器及排查故障，参考[官网](https://redis.io/topics/rediscli)
 
 > 命令行用法
