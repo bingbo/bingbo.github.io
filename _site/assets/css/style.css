@@ -279,7 +279,7 @@ a:hover small {
   color: #777; }
 
 .wrapper {
-  width: 860px;
+  width: auto;
   margin: 0 auto; }
 
 blockquote {
@@ -319,7 +319,7 @@ img {
   max-width: 100%; }
 
 header {
-  width: 270px;
+  width: 20%;
   float: left;
   position: fixed;
   -webkit-font-smoothing: subpixel-antialiased; }
@@ -375,7 +375,7 @@ strong {
   color: #222; }
 
 section {
-  width: 500px;
+  width: 76%;
   float: right;
   padding-bottom: 50px; }
 
@@ -389,7 +389,7 @@ hr {
   margin: 0 0 20px; }
 
 footer {
-  width: 270px;
+  width: 20%;
   float: left;
   position: fixed;
   bottom: 50px;
