@@ -1,10 +1,14 @@
-## redis中常用的管理服务的命令
+## redis中常用命令
 
-### info
+其他所有命令见[官网](https://redis.io/commands)
+
+### redis中常用的管理服务的命令
+
+#### info
 
 返回关于服务器的各种信息及统计数值
 
-#### 语法
+> 语法
 
 ```bash
 INFO [section]
@@ -135,7 +139,7 @@ mem_fragmentation_ratio:1.10
 mem_allocator:libc
 ```
 
-#### 参数说明
+> 参数说明
 
 * server : 一般 Redis 服务器信息，包含以下域：
 
@@ -186,3 +190,54 @@ mem_allocator:libc
 * commandstats : Redis 命令统计信息
 * cluster : Redis 集群信息
 * keyspace : 数据库相关的统计信息
+
+#### DBSIZE
+
+返回数据库中key的数量
+
+```bash
+127.0.0.1:6379> DBSIZE
+(integer) 2
+```
+
+#### FLUSHALL
+
+清空整个 Redis 服务器的数据(删除所有数据库的所有 key )
+
+```bash
+127.0.0.1:6379> FLUSHALL
+OK
+```
+
+#### FLUSHDB
+
+清空当前数据库中的所有 key
+
+```bash
+127.0.0.1:6379> FLUSHDB
+OK
+```
+
+#### CONFIG GET parameter 
+    
+获取指定配置参数的值
+
+#### CONFIG REWRITE 
+
+对启动 Redis 服务器时所指定的 redis.conf 配置文件进行改写
+
+#### CONFIG SET parameter value 
+
+修改 redis 配置参数，无需重启
+
+#### CONFIG RESETSTAT 
+
+重置 INFO 命令中的某些统计数据
+
+#### LASTSAVE 
+
+返回最近一次 Redis 成功将数据保存到磁盘上的时间，以 UNIX 时间戳格式表示
+
+#### MONITOR 
+
+实时打印出 Redis 服务器接收到的命令，调试用
