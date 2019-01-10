@@ -2,9 +2,9 @@
 
 ### 语法
 
-`bash
+```bash
 redis-benchmark [-h <host>] [-p <port>] [-c <clients>] [-n <requests]> [-k <boolean>]
-`
+```
 
 如：
 
