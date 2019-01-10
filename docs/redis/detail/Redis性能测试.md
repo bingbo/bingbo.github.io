@@ -31,34 +31,37 @@ redis-benchmark [-h <host>] [-p <port>] [-c <clients>] [-n <requests]> [-k <bool
 ### 示例
 
 > 按默认配置在127.0.0.1:6379上执行
+
 `bash
 redis-benchmark
 `
 
-> Use 20 parallel clients, for a total of 100k requests, against 192.168.1.1:
+> 20个并发，100000个请求，在192.168.1.1:6379上执行
+
 `bash
 redis-benchmark -h 192.168.1.1 -p 6379 -n 100000 -c 20
 `
 
-> Fill 127.0.0.1:6379 with about 1 million keys only using the SET test:
+> 在127.0.0.1:6379用随机1000000个key测试set命令
+
 `bash
 redis-benchmark -t set -n 1000000 -r 100000000
 `
 
-> Benchmark 127.0.0.1:6379 for a few commands producing CSV output:
+> 在127.0.0.1:6379测试指定一些命令并以csv格式输出
+
 `bash
 redis-benchmark -t ping,set,get -n 100000 --csv
 `
 
-> Benchmark a specific command line:
+> 测试指定命令行
+
 `bash
 redis-benchmark -r 10000 -n 10000 eval 'return redis.call("ping")' 0
 `
 
-> Fill a list with 10000 random elements:
+> 使用10000个随机数填充一个list，可以用`__rand_int__`代替-r参数产生随机数
+
 `bash
 redis-benchmark -r 10000 -n 10000 lpush mylist __rand_int__
 `
-
- On user specified command lines __rand_int__ is replaced with a random integer
- with a range of values selected by the -r option.
