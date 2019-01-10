@@ -6,7 +6,7 @@
 redis-benchmark [-h <host>] [-p <port>] [-c <clients>] [-n <requests]> [-k <boolean>]
 ```
 
-如：
+> 如默认配置：
 
 ```bash
 $redis-benchmark
