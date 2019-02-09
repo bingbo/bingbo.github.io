@@ -82,6 +82,9 @@ sed '2,$d' data.txt
 #删除匹配的行
 sed -i '/^a.*/d' tmp.txt
 
+#删除空行
+sed -i '/^$/d' test.txt
+
 #在第2行后面添加'hello,world'
 sed '2a hello,world' data.txt
 
