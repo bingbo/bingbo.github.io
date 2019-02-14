@@ -564,3 +564,17 @@ $tcptrace network.dump
     7003 ral-agent        /home/work/odp_d  0.1 16404 252372 2015 work      502
     6519 php-cgi          /home/work/odp_d  0.0 16092 255144 Jan15 work     502
     ```
+
+## 查看CPU或内存占用过高问题
+
+详细参考[一次服务器CPU占用率高的定位分析](https://my.oschina.net/xianggao/blog/394800)
+
+1. 通过`top`命令查出哪个进程占用过高
+
+1. 再通过`top -H -p pid`查看进程内各线程占用的比例
+
+1. 用`strace -T -r -c -p pid`查看系统调用和花费的时间
+
+1. 通过`pstack pid`查看每个线程的调用堆栈情况，找到占用较高的那个线程，看其调用堆栈
+
+1. 再使用`strace -p tid`查看线程的调用过程接着定位到代码
