@@ -15,6 +15,7 @@ layout: default
   * **[MYSQL安装](./detail/MYSQL安装.html)**
   * **[MYSQL中文乱码问题](./detail/MYSQL中文乱码问题.html)**
   * **[MYSQL应用实例](./detail/MYSQL应用实例.html)**
+  * **[MYSQL的BinLog的监听与实时消费-Maxwell](./detail/MYSQL的BinLog的监听与实时消费.md)
 
 
 [back](./../../)
