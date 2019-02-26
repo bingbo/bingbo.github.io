@@ -58,7 +58,7 @@ bin/maxwell --user='maxwell' --password='XXXXXX' --host='127.0.0.1' --producer=k
 
 ### 附上详细配置文件
 
-```editorconfig
+```config
 # tl;dr config
 log_level=info
 
