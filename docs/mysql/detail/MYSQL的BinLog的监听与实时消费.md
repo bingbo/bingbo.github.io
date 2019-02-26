@@ -67,6 +67,7 @@ bin/maxwell --user='maxwell' --password='XXXXXX' --host='127.0.0.1' --producer=k
 #### kafka
 
 kafka详细操作见[官方文档](https://kafka.apache.org)
+
 kafka[快速开始](https://kafka.apache.org/quickstart)
 
 #### 附上详细配置文件
