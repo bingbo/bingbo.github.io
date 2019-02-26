@@ -56,9 +56,16 @@ bin/maxwell
 bin/maxwell --user='maxwell' --password='XXXXXX' --host='127.0.0.1' --producer=kafka --kafka.bootstrap.servers=localhost:9092 --kafka_topic=maxwell
 ```
 
+### 效果数据示例
+
+```bash
+{"database":"test","table":"people","type":"update","ts":1551162456,"xid":1594,"commit":true,"data":{"id":3,"name":"hello,bing","age":1000},"old":{"name":"hello,bill"}}
+
+{"database":"test","table":"people","type":"update","ts":1551162481,"xid":1606,"commit":true,"data":{"id":2,"name":"hello,bing","age":100},"old":{"name":"hello,bill"}}
+```
 ### 附上详细配置文件
 
-```config
+```bash
 # tl;dr config
 log_level=info
 
