@@ -62,7 +62,14 @@ bin/maxwell --user='maxwell' --password='XXXXXX' --host='127.0.0.1' --producer=k
 {"database":"test","table":"people","type":"update","ts":1551162456,"xid":1594,"commit":true,"data":{"id":3,"name":"hello,bing","age":1000},"old":{"name":"hello,bill"}}
 {"database":"test","table":"people","type":"update","ts":1551162481,"xid":1606,"commit":true,"data":{"id":2,"name":"hello,bing","age":100},"old":{"name":"hello,bill"}}
 ```
-### 附上详细配置文件
+### 其他
+
+#### kafka
+
+kafka详细操作见[官方文档](https://kafka.apache.org)
+kafka[快速开始](https://kafka.apache.org/quickstart)
+
+#### 附上详细配置文件
 
 ```bash
 # tl;dr config
