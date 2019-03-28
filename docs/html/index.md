@@ -8,6 +8,7 @@ layout: default
   * **[文字自动截断](./detail/文字自动截断.html)**
   * **[开发笔记](./detail/开发笔记.html)**
   * **[禁止复制拖动全选右键](./detail/禁止复制拖动.html)**
+  * **[CRC32在GoLang和JS的应用](./detail/js_crc32和go_crc32.html)**
 
 
 [back](./../../)
