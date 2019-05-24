@@ -233,12 +233,11 @@ func TestWriteConnectionResetByPeer(t *testing.T) {
 			fmt.Println("connect to server ok")
 			data := []byte("hello ")
 			res := make([]byte, 100)
-			// 服务端写完数据后关闭或断开，客户端读取时会出现read: connection reset by peer
 			n, err := conn.Read(res)
 			fmt.Println("receive server response: ", string(res), n, err)
 			// time.Sleep(5 * time.Second)
 			fmt.Println("begin writing...")
-			// 在写入数据的过程中服务端断开连接
+		    // 服务端写完数据后关闭或断开，客户端读取时会出现write: connection reset by peer
 			for i := 0; i < 10000; i++ {
 				time.Sleep(100 * time.Millisecond)
 				n, err := conn.Write(data)
