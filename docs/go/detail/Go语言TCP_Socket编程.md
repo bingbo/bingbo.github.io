@@ -199,3 +199,14 @@ for i := 0; i < 10000; i++ {
 
 fmt.Println("request done...")
 ```
+
+## 连接被重置[connection reset by peer]
+
+> 现象
+
+```bash
+write tcp 10.171.63.17:36484->10.176.86.163:8187: write: connection reset by peer
+```
+
+> 示例
+
