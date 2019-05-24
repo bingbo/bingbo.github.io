@@ -202,6 +202,8 @@ fmt.Println("request done...")
 
 ## 连接被重置[connection reset by peer]
 
+### 问题：在连接被断开后，第一次写入数据会出现以下情况，而后续非第一次写入会出现broken pipe
+
 > 现象
 
 ```bash
