@@ -202,7 +202,12 @@ fmt.Println("request done...")
 
 ## 连接被重置[connection reset by peer]
 
+一般表明流量太大而处理不过来的情况，这时可能要扩容了
+
+
 ### 问题：在连接被断开后，第一次写入数据会出现以下情况，而后续非第一次写入会出现broken pipe
+
+当服务端的连接数大于客户端的连接数，调并发情况下，客户端连接会被reset，这时再写入数据时会出现下面的情况
 
 > 现象
 
@@ -212,3 +217,173 @@ write tcp 10.171.63.17:36484->10.176.86.163:8187: write: connection reset by pee
 
 > 示例
 
+```go
+//client
+func TestWriteConnectionResetByPeer(t *testing.T) {
+	var wg sync.WaitGroup
+	for i := 0; i < 1000; i++ {
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			conn, err := net.Dial("tcp", "10.64.49.20:8888")
+			if err != nil {
+				fmt.Printf("dial error:%s", err)
+				return
+			}
+			fmt.Println("connect to server ok")
+			data := []byte("hello ")
+			res := make([]byte, 100)
+			// 服务端写完数据后关闭或断开，客户端读取时会出现read: connection reset by peer
+			n, err := conn.Read(res)
+			fmt.Println("receive server response: ", string(res), n, err)
+			// time.Sleep(5 * time.Second)
+			fmt.Println("begin writing...")
+			// 在写入数据的过程中服务端断开连接
+			for i := 0; i < 10000; i++ {
+				time.Sleep(100 * time.Millisecond)
+				n, err := conn.Write(data)
+				if err != nil {
+					fmt.Printf("write %d bytes, error:%s\n", n, err)
+					return
+				}
+				fmt.Println("write ", n, err)
+
+			}
+			conn.Close()
+			fmt.Println("request done...")
+		}()
+	}
+	wg.Wait()
+	// time.Sleep(10000 * time.Second)
+}
+```
+
+```go
+//server 
+package main
+
+import (
+	"fmt"
+	"net"
+	"time"
+)
+
+func main() {
+	start := time.Now()
+	l, err := net.Listen("tcp", ":8888")
+	if err != nil {
+		fmt.Println("listen err:", err)
+		return
+	}
+	// i := 0
+	defer l.Close()
+	for {
+		c, err := l.Accept()
+		if err != nil {
+			fmt.Println("accept err:", err)
+			return
+		}
+		fmt.Println("accept one")
+		go handleConnectionSuccess(c)
+
+	}
+
+	fmt.Println("take ", time.Since(start).Seconds())
+}
+
+func handleConnectionSuccess(c net.Conn) {
+	c.Write([]byte("receive client's request"))
+	return
+}
+```
+
+### 问题，在连接被断开后，客户端读取数据时会出现以下情况
+
+当客户端的连接数大于服务端的连接数时，高并发情况下，服务端在写完响应数据后有可能会挂掉，这时客户端在读取数据时会出现以下情况
+> 现象
+
+```bash
+read tcp 172.24.198.180:56058->10.64.49.20:8888: read: connection reset by peer
+```
+
+> 示例
+
+```go
+//client
+func TestWriteConnectionResetByPeer(t *testing.T) {
+	var wg sync.WaitGroup
+	for i := 0; i < 1000; i++ {
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			conn, err := net.Dial("tcp", "10.64.49.20:8888")
+			if err != nil {
+				fmt.Printf("dial error:%s", err)
+				return
+			}
+			fmt.Println("connect to server ok")
+			data := []byte("hello ")
+			res := make([]byte, 100)
+			// 服务端写完数据后关闭或断开，客户端读取时会出现read: connection reset by peer
+			n, err := conn.Read(res)
+			fmt.Println("receive server response: ", string(res), n, err)
+			// time.Sleep(5 * time.Second)
+			fmt.Println("begin writing...")
+			// 在写入数据的过程中服务端断开连接
+			for i := 0; i < 10000; i++ {
+				time.Sleep(100 * time.Millisecond)
+				n, err := conn.Write(data)
+				if err != nil {
+					fmt.Printf("write %d bytes, error:%s\n", n, err)
+					return
+				}
+				fmt.Println("write ", n, err)
+
+			}
+			conn.Close()
+			fmt.Println("request done...")
+		}()
+	}
+	wg.Wait()
+	// time.Sleep(10000 * time.Second)
+}
+```
+
+```go
+//server 
+package main
+
+import (
+	"fmt"
+	"net"
+	"time"
+)
+
+func main() {
+	start := time.Now()
+	l, err := net.Listen("tcp", ":8888")
+	if err != nil {
+		fmt.Println("listen err:", err)
+		return
+	}
+	// i := 0
+	defer l.Close()
+	for {
+		c, err := l.Accept()
+		if err != nil {
+			fmt.Println("accept err:", err)
+			return
+		}
+		fmt.Println("accept one")
+		go handleConnectionSuccess(c)
+
+	}
+
+	fmt.Println("take ", time.Since(start).Seconds())
+}
+
+func handleConnectionSuccess(c net.Conn) {
+	c.Write([]byte("receive client's request"))
+	return
+}
+```
