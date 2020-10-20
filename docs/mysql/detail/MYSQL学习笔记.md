@@ -535,3 +535,9 @@
    | general_log_file | /home/work/.jumbo/var/lib/mysql/db-vp-novel-1.log |
    +------------------+---------------------------------------------------+
    ```
+   
+* 查看表结构
+
+```mysql
+select COLUMN_NAME 列名, COLUMN_TYPE 字段类型, COLUMN_DEFAULT 默认值,IS_NULLABLE 是否可空, COLUMN_COMMENT 字段注释 from INFORMATION_SCHEMA.COLUMNS Where table_name = 'xxx_table' and table_schema ='xxx_db';
+```
