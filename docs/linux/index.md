@@ -24,6 +24,7 @@ layout: default
   * **[shell常用命令](./detail/shell常用命令.html)**
   * **[Linux性能监控](./detail/Linux性能监控.html)**
   * **[vim配置](./detail/vim配置.html)**
+  * **[vim笔记](./detail/vim笔记.html)**
   * **[Linux查看系统信息方法](./detail/Linux查看系统信息方法.html)**
   * **[Linux基础命令](./detail/Linux基础命令.html)**
   * **[IPTables防火墙规则](./detail/IPTables防火墙规则.html)**
