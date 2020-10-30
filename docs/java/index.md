@@ -5,6 +5,7 @@ layout: default
 
 ### JAVA
 
+  * **[Java笔记](./detail/笔记.html)**
   * **[Java树型结构生成方法](./detail/Java树生成方法.html)**
   * **[Java定时任务应用](./detail/Java中定时任务应用.html)**
   * **[Java XML解析](./detail/Java中的xml解析.html)**
