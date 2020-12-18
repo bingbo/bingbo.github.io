@@ -541,3 +541,23 @@
 ```mysql
 select COLUMN_NAME 列名, COLUMN_TYPE 字段类型, COLUMN_DEFAULT 默认值,IS_NULLABLE 是否可空, COLUMN_COMMENT 字段注释 from INFORMATION_SCHEMA.COLUMNS Where table_name = 'xxx_table' and table_schema ='xxx_db';
 ```
+
+* 树形表结构查询
+
+```mysql
+mysql> select * from nodelist a left join nodelist b on b.id=a.pid and a.id=1;
++------+-------------+------+------+-------------+------+
+| id   | nodecontent | pid  | id   | nodecontent | pid  |
++------+-------------+------+------+-------------+------+
+|    1 | a           | NULL | NULL | NULL        | NULL |
+|    2 | b           |    1 | NULL | NULL        | NULL |
+|    3 | c           |    1 | NULL | NULL        | NULL |
+|    4 | d           |    2 | NULL | NULL        | NULL |
+|    5 | e           |    3 | NULL | NULL        | NULL |
+|    6 | f           |    3 | NULL | NULL        | NULL |
+|    7 | g           |    5 | NULL | NULL        | NULL |
+|    8 | h           |    7 | NULL | NULL        | NULL |
+|    9 | i           |    8 | NULL | NULL        | NULL |
+|   10 | j           |    8 | NULL | NULL        | NULL |
++------+-------------+------+------+-------------+------+
+```
